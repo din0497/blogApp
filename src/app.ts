@@ -1,5 +1,6 @@
 import express from "express"
 import path from "path"
+import router from './router'
 
 
 // 1-Entrance
@@ -19,10 +20,7 @@ app.set('view engine', 'ejs')
 
 // 4-Routes
 
-app.get("/", (req, res) => {
-    res.render('blog')
-})
-
+app.use("/", router)
 
 
 
