@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast UI Editor</title>
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
+    />
+  </head>
+  <body>
+    <div id="editor"></div>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+      const Editor = toastui.Editor;
+      const editor = new Editor({
+        el: document.querySelector("#editor"),
+        height: "500px",
+        initialEditType: "markdown",
+        previewStyle: "vertical",
+      });
+
+      // Save content to the backend
+      function saveContent() {
+        const content = editor.getMarkdown();
+        fetch("/save", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          });
+      }
+
+      // Add an event listener for saving content
+      document
+        .querySelector("#save-button")
+        .addEventListener("click", saveContent);
+    </script>
+    <button id="save-button">Save</button>
+  </body>
+</html>
